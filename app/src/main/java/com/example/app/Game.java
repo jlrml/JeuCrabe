@@ -62,8 +62,7 @@ public class Game extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         start();
-        int x = game.getScore();
-        Log.v("valx", String.valueOf(x));
+
 
     }
 

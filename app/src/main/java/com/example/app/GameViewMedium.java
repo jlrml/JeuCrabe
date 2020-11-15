@@ -209,9 +209,9 @@ public class GameViewMedium extends View implements SensorEventListener {
         setCrabState(crab_stat);
 
         star1= BitmapFactory.decodeResource(getResources(),R.drawable.victory1);
-        shark=BitmapFactory.decodeResource(getResources(),R.drawable.shark);
-        shark2=BitmapFactory.decodeResource(getResources(),R.drawable.shark);
-        shark3=BitmapFactory.decodeResource(getResources(),R.drawable.shark);
+        shark=BitmapFactory.decodeResource(getResources(),R.drawable.bird);
+        shark2=BitmapFactory.decodeResource(getResources(),R.drawable.bird);
+        shark3=BitmapFactory.decodeResource(getResources(),R.drawable.bird);
         bg=BitmapFactory.decodeResource(getResources(),R.drawable.fond_crabe);
 
         this.imageWidth = bird.getWidth();
@@ -242,7 +242,7 @@ public class GameViewMedium extends View implements SensorEventListener {
         life[1] = BitmapFactory.decodeResource(getResources(), R.drawable.empty);
 
         vie[0] = BitmapFactory.decodeResource(getResources(), R.drawable.heart);
-        vie[1] = BitmapFactory.decodeResource(getResources(), R.drawable.heart_g);
+        vie[1] = BitmapFactory.decodeResource(getResources(), R.drawable.heart_empty);
 
 
         life_count=0;
@@ -355,7 +355,7 @@ if (valide) {
 
 
     canvas.drawBitmap(this.bird, this.currentX, this.currentY, this.paint);
-    canvas.drawText("Erreur : " + score, 1, canvas.getHeight(), scorePaint);
+    //canvas.drawText("Erreur : " + score, 1, canvas.getHeight(), scorePaint);
     if (crab_stat == 1) {
         canvas.drawText("ROUGE ", canvas.getWidth() / 2, 750, couleurAsk);
     } else if (crab_stat == 2) {
@@ -586,28 +586,19 @@ if (valide) {
 
     if (hitCheck(sharkX, sharkY)) {
         vie_nombre -= 1;
-        sharkX = (int) (Math.random() * (1300 - 1));
+        sharkX -=1500;
     }
     if (hitCheck(shark2X, shark2Y)) {
         vie_nombre -= 1;
-        shark2X = (int) (Math.random() * (1300 - 1));
+        shark2X -=1500;
     }
 
     if (hitCheck(shark3X, shark3Y)) {
         vie_nombre -= 1;
-        shark3X = (int) (Math.random() * (1300 - 1));
+        shark3X-=1500;
     }
 
-    for (int i = 0; i < 15; i++) {
-        int x = (int) (50 + life[0].getWidth() * 0.8 * i);
-        int y = 1;
 
-        if (i < life_count) {
-            canvas.drawBitmap(life[0], x, y, null);
-        } else {
-            canvas.drawBitmap(life[1], x, y, null);
-        }
-    }
 
     for (int i = 0; i < 3; i++) {
         int x = (int) (1100 + life[0].getWidth() * 0.8 * i);
@@ -620,7 +611,7 @@ if (valide) {
         }
     }
 
-    if (life_count == 15) {
+    if (life_count == 10) {
         valide = false;
     }
 

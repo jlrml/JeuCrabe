@@ -338,7 +338,7 @@ public class GameView extends View implements SensorEventListener {
             canvas.drawBitmap(bgris, grisx, grisy, this.paint);
 
             canvas.drawBitmap(this.bird, this.currentX, this.currentY, this.paint);
-            canvas.drawText("Erreur : " + score, 1, canvas.getHeight(), scorePaint);
+            //canvas.drawText("Erreur : " + score, 1, canvas.getHeight(), scorePaint);
             if (crab_stat == 1) {
                 canvas.drawText("ROUGE ", canvas.getWidth() / 2, 750, couleurAsk);
             } else if (crab_stat == 2) {
@@ -370,8 +370,9 @@ public class GameView extends View implements SensorEventListener {
                     blancx = -500;
 
                     crab_stat = blancdelete();
-                    setCrabState(crab_stat);
+
                     blancx = (int) (Math.random() * (1300 - 1));
+                    setCrabState(crab_stat);
                     life_count+=1;
                 }
                 else {
@@ -577,16 +578,7 @@ public class GameView extends View implements SensorEventListener {
                 }
                 return;
             }
-            for (int i = 0; i < 7; i++) {
-                int x = (int) (50 + life[0].getWidth() * 0.8 * i);
-                int y= 1;
 
-                if (i < life_count) {
-                    canvas.drawBitmap(life[0], x, y, null);
-                } else {
-                    canvas.drawBitmap(life[1], x, y, null);
-                }
-            }
             if(life_count==7){
                 valide=false;
             }
