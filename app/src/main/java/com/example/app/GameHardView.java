@@ -1,11 +1,13 @@
 package com.example.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -20,7 +22,7 @@ import java.util.Random;
 public class GameHardView  extends View implements SensorEventListener {
 
     private Bitmap background;
-    public GameMedium context;
+    public GameHard context;
     public SensorManager sensorManager;
     public Sensor accelerometer;
     private int imageWidth;
@@ -124,9 +126,10 @@ public class GameHardView  extends View implements SensorEventListener {
     int ball_stat;
     Random r;
 
-    public GameHardView(Context pcontext) {
+    public GameHardView(GameHard pcontext) {
         super( pcontext);
-        this.init( context );
+        this.context = pcontext;
+        init(pcontext);
 
     }
 
@@ -212,9 +215,9 @@ public class GameHardView  extends View implements SensorEventListener {
 
         background=BitmapFactory.decodeResource(getResources(),R.drawable.fond_crabe);
         star1= BitmapFactory.decodeResource(getResources(),R.drawable.victory1);
-        shark=BitmapFactory.decodeResource(getResources(),R.drawable.bird);
-        shark2=BitmapFactory.decodeResource(getResources(),R.drawable.bird);
-        shark3=BitmapFactory.decodeResource(getResources(),R.drawable.bird);
+        shark=BitmapFactory.decodeResource(getResources(),R.drawable.oiseau);
+        shark2=BitmapFactory.decodeResource(getResources(),R.drawable.oiseau);
+        shark3=BitmapFactory.decodeResource(getResources(),R.drawable.oiseau);
 
         this.imageWidth = bird.getWidth();
         this.imageHeight = bird.getHeight();
@@ -337,8 +340,11 @@ public class GameHardView  extends View implements SensorEventListener {
         int noiry=calcul_taille*9;
         int grisy=calcul_taille*10;
 
-if (valide){
-        canvas.drawBitmap(background,0,0,null);
+        Rect dest = new Rect(0, 0, getWidth(), getHeight());
+        Paint paint = new Paint();
+        paint.setFilterBitmap(true);
+        canvas.drawBitmap(background, null, dest, paint);
+
         canvas.drawBitmap(bblanc, blancx, blancy, this.paint);
         canvas.drawBitmap(bbleu, bleux, bleuy, this.paint);
         canvas.drawBitmap(borange, orangex, orangey, this.paint);
@@ -646,12 +652,33 @@ if (valide){
             }
         }
 
-        if(life_count==10){
-            valide=false;
-        }}
-else {
-    canvas.drawBitmap(star1, 0, 0, null);
-}
+
+        if(life_count ==10 && vie_nombre==3){
+            Intent intent = new Intent(context, EndGame.class);
+            intent.putExtra(EndGameActivity.INTENT_STAR_NUMBER, 3);
+            context.startActivity(intent);
+        }
+
+        if(life_count ==10 && vie_nombre==2){
+            Intent intent = new Intent(context, EndGame.class);
+            intent.putExtra(EndGameActivity.INTENT_STAR_NUMBER, 2);
+            context.startActivity(intent);
+        }
+
+        if(life_count ==10 && vie_nombre==1){
+            Intent intent = new Intent(context, EndGame.class);
+            intent.putExtra(EndGameActivity.INTENT_STAR_NUMBER, 1);
+            context.startActivity(intent);
+        }
+
+        if(life_count ==10 && vie_nombre<1){
+            Intent intent = new Intent(context, EndGame.class);
+            intent.putExtra(EndGameActivity.INTENT_STAR_NUMBER, 0);
+            context.startActivity(intent);
+        }
+
+
+
 
 
     }

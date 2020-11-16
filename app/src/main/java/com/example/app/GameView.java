@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -114,7 +115,8 @@ public class GameView extends View implements SensorEventListener {
 
     public GameView(Context pcontext) {
         super( pcontext);
-        this.init( context );
+        this.context = (Game) pcontext;
+        init(pcontext);
 
     }
 
@@ -318,12 +320,11 @@ public class GameView extends View implements SensorEventListener {
         int grisy=calcul_taille*10;
 
 
-        if(valide) {
 
-
-
-
-            canvas.drawBitmap(background,0,0,null);
+        Rect dest = new Rect(0, 0, getWidth(), getHeight());
+        Paint paint = new Paint();
+        paint.setFilterBitmap(true);
+        canvas.drawBitmap(background, null, dest, paint);
 
             canvas.drawBitmap(bblanc, blancx, blancy, this.paint);
             canvas.drawBitmap(bbleu, bleux, bleuy, this.paint);
@@ -579,15 +580,35 @@ public class GameView extends View implements SensorEventListener {
                 return;
             }
 
-            if(life_count==7){
-                valide=false;
+
+            if(life_count ==5 && score<=3){
+                Intent intent = new Intent(context, EndGame.class);
+                intent.putExtra(EndGameActivity.INTENT_STAR_NUMBER, 3);
+                context.startActivity(intent);
             }
 
-        }
+            if(life_count ==5 && score>3){
+                Intent intent = new Intent(context, EndGame.class);
+                intent.putExtra(EndGameActivity.INTENT_STAR_NUMBER, 2);
+                context.startActivity(intent);
+            }
 
-        else {
-                canvas.drawBitmap(star1,0,0,null);
-        }
+            if(life_count ==5 && score>8){
+                Intent intent = new Intent(context, EndGame.class);
+                intent.putExtra(EndGameActivity.INTENT_STAR_NUMBER, 1);
+                context.startActivity(intent);
+            }
+
+            if(life_count ==5 && score>10){
+                Intent intent = new Intent(context, EndGame.class);
+                intent.putExtra(EndGameActivity.INTENT_STAR_NUMBER, 0);
+                context.startActivity(intent);
+            }
+
+
+
+
+
     }
 
     @Override

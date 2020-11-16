@@ -7,6 +7,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameHard extends AppCompatActivity {
 
@@ -25,23 +29,29 @@ public class GameHard extends AppCompatActivity {
         setContentView(game);
 
 
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.invalidate();
+                    }
+                });
+            }
+        }, 0, TIMER_INTERVAL);
+
+
 
 
 
     }
 
-    public void start() {
-        handler.postDelayed(my_runnable, 1);
-    }
-
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
 
 
 
-    }
 
     @Override
     protected void onResume() {
@@ -59,11 +69,7 @@ public class GameHard extends AppCompatActivity {
     }
 
     public void changed(){
-        Intent intent = new Intent(GameHard.this,GameOver.class);
-        startActivity(intent);
-        finish();
+
     }
-    public void stop() {
-        handler.removeCallbacks(my_runnable);
-    }
+
 }
